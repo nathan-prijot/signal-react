@@ -1,7 +1,7 @@
 {
   "name": "signal-react",
-  "private": true,
   "version": "0.0.0",
+  "description": "Simple signal implementation for React",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,6 +9,15 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "keywords": [
+    "signal",
+    "signals"
+  ],
+  "author": {
+    "name": "Nathan Prijot",
+    "email": "nathanprijot@live.be"
+  },
+  "license": "MIT",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -24,5 +33,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "typescript": "^5.2.2",
     "vite": "^5.1.4"
-  }
+  },
+  "repository": "github:nathan-prijot/signal-react",
+  "homepage": "https://github.com/nathan-prijot/signal-react#readme"
 }

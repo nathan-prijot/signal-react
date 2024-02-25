@@ -76,7 +76,6 @@ export function useSignalEffect(
   useEffect(() => {
     signalEffect(effect);
     return () => {
-      console.log("clear");
       clear = true;
       signalEffect(effect);
       clear = false;

@@ -3,14 +3,18 @@ import "./App.css";
 import Counter from "./components/Counter";
 import NavBar from "./components/NavBar";
 import { useSignalEffect } from "./signal-react/Signal";
-import { counterSignal } from "./signals/CounterSignal";
+import { SignalElement } from "./signal-react/SignalElement";
+import { counterSignal, otherCounterSignal } from "./signals/CounterSignal";
 
 function App() {
   console.log("App render");
   const [navBarKey, setNavBarKey] = useState(0);
   const [counterKey, setCounterKey] = useState(0);
 
-  useSignalEffect(() => console.log(counterSignal.value), []);
+  useSignalEffect(() => {
+    console.log(counterSignal.value);
+    console.log(otherCounterSignal.value);
+  }, []);
 
   return (
     <>
@@ -29,6 +33,9 @@ function App() {
       >
         Rerender Counter
       </button>
+      <p className="soloParagraph">
+        Other counter: <SignalElement signal={otherCounterSignal} />
+      </p>
     </>
   );
 }

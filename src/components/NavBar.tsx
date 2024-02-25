@@ -1,5 +1,5 @@
 import { SignalElement } from "../signal-react/SignalElement";
-import { counterSignal } from "../signals/CounterSignal";
+import { counterSignal, otherCounterSignal } from "../signals/CounterSignal";
 import "./NavBar.css";
 
 export default function NavBar(): React.ReactNode {
@@ -11,7 +11,11 @@ export default function NavBar(): React.ReactNode {
         <li>
           <a>Link 1</a>
         </li>
-        <li>
+        <li
+          onClick={() => {
+            otherCounterSignal.value = otherCounterSignal.value + 1;
+          }}
+        >
           <a>Link 2</a>
         </li>
         <li>
