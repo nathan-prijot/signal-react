@@ -2,9 +2,13 @@ import { useState } from "react";
 import "./App.css";
 import Counter from "./components/Counter";
 import NavBar from "./components/NavBar";
-import { useSignalEffect } from "./signal-react/Signal";
+import { useSignalComputed, useSignalEffect } from "./signal-react/Signal";
 import { SignalElement } from "./signal-react/SignalElement";
-import { counterSignal, otherCounterSignal } from "./signals/CounterSignal";
+import {
+  counterSignal,
+  countersTotalSignal,
+  otherCounterSignal,
+} from "./signals/Signals";
 
 function App() {
   console.log("App render");
@@ -15,6 +19,10 @@ function App() {
     console.log(counterSignal.value);
     console.log(otherCounterSignal.value);
   }, []);
+
+  const otherCounterDoubleSignal = useSignalComputed(
+    () => otherCounterSignal.value * 2
+  );
 
   return (
     <>
@@ -34,7 +42,14 @@ function App() {
         Rerender Counter
       </button>
       <p className="soloParagraph">
-        Other counter: <SignalElement signal={otherCounterSignal} />
+        Other counter: {<SignalElement signal={otherCounterSignal} />}
+      </p>
+      <p className="soloParagraph">
+        Counters total: {<SignalElement signal={countersTotalSignal} />}
+      </p>
+      <p className="soloParagraph">
+        Other counter double:{" "}
+        {otherCounterDoubleSignal.value}
       </p>
     </>
   );

@@ -1,5 +1,5 @@
 import { SignalElement } from "../signal-react/SignalElement";
-import { counterSignal, otherCounterSignal } from "../signals/CounterSignal";
+import { counterSignal, otherCounterSignal } from "../signals/Signals";
 import "./NavBar.css";
 
 export default function NavBar(): React.ReactNode {

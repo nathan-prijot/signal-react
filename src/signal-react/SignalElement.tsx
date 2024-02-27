@@ -7,5 +7,7 @@ import Signal, { useSignal } from "./Signal";
  * @returns A element that always represent the current signal value.
  */
 export function SignalElement<T>({ signal }: { signal: Signal<T> }): ReactNode {
+  console.log("SignalElement render");
+  
   return <>{useSignal(signal)}</>;
 }

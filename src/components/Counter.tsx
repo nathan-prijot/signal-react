@@ -1,5 +1,5 @@
 import { SignalElement } from "../signal-react/SignalElement";
-import { counterSignal } from "../signals/CounterSignal";
+import { counterSignal } from "../signals/Signals";
 import "./Counter.css";
 
 export default function Counter(): React.ReactNode {

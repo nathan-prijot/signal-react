@@ -1,4 +1,4 @@
-import { DependencyList, useEffect, useState } from "react";
+import { DependencyList, useEffect, useRef, useState } from "react";
 
 /** Stores the current subscriber calling the {@link signalEffect} function. */
 let currentSubscriber: (() => void) | undefined;
@@ -31,6 +31,21 @@ export default class Signal<T> {
   /** Sets the value of the signal. Updating all the subscribers. */
   set value(newValue: T) {
     this._value = newValue;
+    this.trigger();
+  }
+
+  /** Sets the value of the signal without calling the subscribers. */
+  setValue(newValue: T): void {
+    this._value = newValue;
+  }
+
+  /** Peeks a the value of the signal without subscribing to it's changes. */
+  peek(): T {
+    return this.value;
+  }
+
+  /** Triggers the signal, calling all it's subscribers, without changing the value. */
+  trigger(): void {
     this._subscribers.forEach((subscriber) => subscriber());
   }
 
@@ -54,14 +69,27 @@ export default class Signal<T> {
 
 /**
  * Uses an effect on any signal.
- * @param subscriber - Callback containing signals that will be triggered when any of the signals values change.
+ * @param effect - Callback containing signals that will be triggered when any of the signals values change.
  */
-export function signalEffect(subscriber: () => void): void {
-  currentSubscriber = subscriber;
+export function signalEffect(effect: () => void): void {
+  currentSubscriber = effect;
 
-  subscriber();
+  effect();
 
   currentSubscriber = undefined;
+}
+
+/**
+ * Uses signals to compute a new signal.
+ * @param computed - Callback containing signals retuning the computed value.
+ * @returns The signal with the computed value, updated each time a signal used to compute it changes.
+ */
+export function signalComputed<T>(computed: () => T): Signal<T> {
+  const signal = new Signal(computed());
+
+  signalEffect(() => (signal.value = computed()));
+
+  return signal;
 }
 
 /**
@@ -84,18 +112,32 @@ export function useSignalEffect(
   }, deps);
 }
 
+export function useSignalComputed<T>(
+  computed: () => T,
+  deps?: DependencyList
+): Signal<T> {
+  const signal = useRef(new Signal(computed()));
+
+  useSignalEffect(() => {
+    signal.current.value = computed();
+  }, deps);
+
+  return signal.current;
+}
+
 /**
  * Hook to use a signal.
  * @param signal - The signal to use.
  * @returns Returns a stateful value updated when the signal value is changed.
  */
 export function useSignal<T>(signal: Signal<T>): T {
-  const [value, setValue] = useState(signal.value);
+  const [, setValue] = useState(false);
 
-  useSignalEffect(() => {
-    const signalValue = signal.value;
-    if (signalValue !== value) setValue(signalValue);
-  }, []);
+  useEffect(() => {
+    const subscriber = () => setValue((value) => !value);
+    signal.subscribe(subscriber);
+    return () => signal.unsubscribe(subscriber);
+  }, [signal]);
 
-  return value;
+  return signal.peek();
 }
