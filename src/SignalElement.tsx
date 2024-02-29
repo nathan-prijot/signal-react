@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Signal, { useSignal } from "./Signal";
+import { Signal, useSignal } from "./Signal";
 
 /**
  * Simple element that consume a signal. It allows the value of the signal to update without triggering parent render.

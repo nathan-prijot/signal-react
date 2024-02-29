@@ -1,4 +1,12 @@
-import { DependencyList, useEffect, useRef, useState } from "react";
+import {
+  DependencyList,
+  FunctionComponentElement,
+  createElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { SignalElement } from ".";
 
 /** Stores the current subscriber calling the {@link signalEffect} function. */
 let currentSubscriber: (() => void) | undefined;
@@ -6,7 +14,7 @@ let currentSubscriber: (() => void) | undefined;
 let clear = false;
 
 /** A signal that can be subscribed to. */
-export default class Signal<T> {
+export class Signal<T> {
   /** The value of the signal. */
   private _value: T;
   /** The subscribers following the signal updates. */
@@ -32,6 +40,12 @@ export default class Signal<T> {
   set value(newValue: T) {
     this._value = newValue;
     this.trigger();
+  }
+
+  get element(): FunctionComponentElement<{
+    signal: Signal<T>;
+  }> {
+    return createElement(SignalElement<T>, { signal: this });
   }
 
   /** Sets the value of the signal without calling the subscribers. */
@@ -65,6 +79,10 @@ export default class Signal<T> {
     const index = this._subscribers.indexOf(subscriber);
     this._subscribers.splice(index, 1);
   }
+}
+
+export function signal<T>(initialValue: T): Signal<T> {
+  return new Signal(initialValue);
 }
 
 /**

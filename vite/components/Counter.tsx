@@ -1,4 +1,4 @@
-import { SignalElement } from "../signal-react/SignalElement";
+import { SignalElement } from "../../src/SignalElement";
 import { counterSignal } from "../signals/Signals";
 import "./Counter.css";
 

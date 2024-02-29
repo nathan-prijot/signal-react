@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./App.css";
 import Counter from "./components/Counter";
 import NavBar from "./components/NavBar";
-import { useSignalComputed, useSignalEffect } from "./signal-react/Signal";
-import { SignalElement } from "./signal-react/SignalElement";
+import { useSignalComputed, useSignalEffect } from "../src/Signal";
+import { SignalElement } from "../src/SignalElement";
 import {
   counterSignal,
   countersTotalSignal,
@@ -49,7 +49,7 @@ function App() {
       </p>
       <p className="soloParagraph">
         Other counter double:{" "}
-        {otherCounterDoubleSignal.value}
+        {otherCounterDoubleSignal.element}
       </p>
     </>
   );

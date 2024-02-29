@@ -21,8 +21,9 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Custom */
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "esModuleInterop": true
   },
-  "include": ["src"],
+  "include": ["src", "vite"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
