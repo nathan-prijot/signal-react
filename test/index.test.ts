@@ -1,6 +1,3 @@
-import "@testing-library/jest-dom";
-//import { render } from "@testing-library/react";
-//import NavBar from "../vite/components/NavBar";
 import { signal, signalComputed, signalEffect } from "../src/index";
 
 describe("value", () => {
@@ -159,7 +156,7 @@ describe("effect", () => {
   });
 });
 
-describe("computed", ()=> {
+describe("computed", () => {
   it("signalComputed", () => {
     const numberA = signal(0);
     const numberB = signal(0);
@@ -175,7 +172,7 @@ describe("computed", ()=> {
     numberB.value++;
 
     expect(total.value).toBe(2);
-  })
+  });
 
   it("peek", () => {
     const numberA = signal(0);
@@ -196,7 +193,7 @@ describe("computed", ()=> {
     numberA.value++;
 
     expect(total.value).toBe(3);
-  })
+  });
 
   it("signalEffect", () => {
     const numberA = signal(0);
@@ -220,8 +217,8 @@ describe("computed", ()=> {
     expect(lastCallValue).toBe(1);
 
     numberB.value++;
-    
+
     expect(calls).toBe(3);
     expect(lastCallValue).toBe(2);
-  })
-})
+  });
+});
