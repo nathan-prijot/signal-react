@@ -55,7 +55,7 @@ export class Signal<T> {
 
   /** Peeks a the value of the signal without subscribing to it's changes. */
   peek(): T {
-    return this.value;
+    return this._value;
   }
 
   /** Triggers the signal, calling all it's subscribers, without changing the value. */
