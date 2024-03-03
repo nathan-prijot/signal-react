@@ -104,7 +104,15 @@ describe("useSignalEffect", () => {
     });
 
     expect(renderCount).toBe(1);
-    expect(calls).toBe(2);
+    expect(calls).toBe(3);
+    expect(lastCallValue).toBe(1);
+
+    act(() => {
+      number.value++;
+    });
+
+    expect(renderCount).toBe(1);
+    expect(calls).toBe(3);
     expect(lastCallValue).toBe(1);
   });
 });
