@@ -1,29 +1,32 @@
 {
-  "name": "signal-react",
+  "name": "signals-react",
   "version": "0.0.0",
-  "description": "Simple signal implementation for React",
+  "description": "Simple signals implementation for React",
+  "files": [
+    "module/"
+  ],
   "type": "module",
+  "main": "./module/index.js",
+  "types": "./module/index.d.ts",
+  "module": "./module/index.js",
   "scripts": {
     "test": "jest --coverage",
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "lint": "eslint ./src",
+    "build": "tsc",
+    "clean": "git clean -fx module/",
+    "prepublish": "npm run clean && npm run build"
   },
   "keywords": [
     "signal",
-    "signals"
+    "signals",
+    "react",
+    "hooks"
   ],
   "author": {
     "name": "Nathan Prijot",
     "email": "nathanprijot@live.be"
   },
   "license": "MIT",
-  "dependencies": {
-    "jest-environment-jsdom": "^29.7.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
@@ -31,17 +34,16 @@
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.56.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.2.2",
-    "vite": "^5.1.4"
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "repository": "github:nathan-prijot/signal-react",
   "homepage": "https://github.com/nathan-prijot/signal-react#readme"

@@ -6,7 +6,4 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest",
   },
-  moduleNameMapper: {
-    "\\.(gif|ttf|eot|svg|png|css)$": "<rootDir>/test/mocks/mock.js",
-  },
 };

@@ -126,7 +126,6 @@ export function useSignalEffect(
       signalEffect(effect);
       clear = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }
 
