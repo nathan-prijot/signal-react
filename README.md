@@ -76,6 +76,33 @@ function App(): React.ReactNode {
 }
 ```
 
+## API
+
+### Core
+
+#### `signal(initialValue)`
+
+The function `signal` creates a new signal. The signal will contains the `initialValue`.
+This value can be read and updated using the `value` property.
+
+```ts
+import { signal } from "simple-signal-react";
+
+const number = signal(0);
+
+// Gets the signal value
+signal.value
+
+// Sets the signal value
+signal.value = 1;
+```
+
+#### `signal.setValue`
+
+The function `setValue` update the signal value without triggering any of it's subscribers.
+
+### Hooks
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)

@@ -38,10 +38,11 @@ export class Signal<T> {
 
   /** Sets the value of the signal. Updating all the subscribers. */
   set value(newValue: T) {
-    this._value = newValue;
+    this.setValue(newValue);
     this.trigger();
   }
 
+  /** Gets the signal React element. */
   get element(): FunctionComponentElement<{
     signal: Signal<T>;
   }> {
@@ -113,7 +114,7 @@ export function signalComputed<T>(computed: () => T): Signal<T> {
 /**
  * Hook to create an effect on any signal.
  * @param effect - The effect to create.
- * @param deps - If present, effect will refresh if the values in the list change.
+ * @param deps - The dependency list of the function. The function will be refreshed when one of the dependency changes.
  */
 export function useSignalEffect(
   effect: () => void,
@@ -129,6 +130,12 @@ export function useSignalEffect(
   }, deps);
 }
 
+/**
+ * Hook to create a computed signal. The signal will be destroyed with the component where it's created.
+ * @param computed - A function that returns a value calculated by combining one or multiple signals.
+ * @param deps - The dependency list of the function. The function will be refreshed when one of the dependency changes.
+ * @returns A new signal that will have the value returned by the function.
+ */
 export function useSignalComputed<T>(
   computed: () => T,
   deps?: DependencyList

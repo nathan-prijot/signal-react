@@ -1,7 +1,12 @@
 import "@testing-library/jest-dom";
 import { act, render } from "@testing-library/react";
 import React from "react";
-import { signal, useSignal, useSignalEffect } from "../src";
+import {
+  signal,
+  useSignal,
+  useSignalComputed,
+  useSignalEffect,
+} from "../src/index";
 
 export function RemoveError(): JSX.Element {
   React.useEffect(() => undefined, []);
@@ -114,5 +119,42 @@ describe("useSignalEffect", () => {
     expect(renderCount).toBe(1);
     expect(calls).toBe(3);
     expect(lastCallValue).toBe(1);
+  });
+});
+
+describe("useSignalComputed", () => {
+  it("useSignalComputed", async () => {
+    let renderCount = 0;
+    const numberA = signal(0);
+    const numberB = signal(0);
+
+    expect(renderCount).toBe(0);
+
+    function Component(): JSX.Element {
+      renderCount++;
+
+      const total = useSignalComputed(() => numberA.value + numberB.value);
+
+      return <p data-testid="value">{total.element}</p>;
+    }
+
+    const { getByTestId } = render(<Component />);
+
+    expect(renderCount).toBe(1);
+    expect(getByTestId("value")).toHaveTextContent("0");
+
+    act(() => {
+      numberA.value++;
+    });
+
+    expect(renderCount).toBe(1);
+    expect(getByTestId("value")).toHaveTextContent("1");
+
+    act(() => {
+      numberB.value++;
+    });
+
+    expect(renderCount).toBe(1);
+    expect(getByTestId("value")).toHaveTextContent("2");
   });
 });
